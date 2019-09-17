@@ -14,10 +14,16 @@ var marginMessageY = CLOUD_Y + TEXT_HEIGHT + MARGIN;
 var marginBarY = CLOUD_HEIGHT - BAR_HEIGHT - MARGIN * 3;
 var marginNameY = CLOUD_HEIGHT - MARGIN;
 
-
 var renderCloud = function (ctx, x, y, color) {
   ctx.fillStyle = color;
   ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
+};
+
+var renderMessage = function (ctx, text1, text2, font, color) {
+  ctx.fillStyle = color;
+  ctx.font = font;
+  ctx.fillText(text1, marginMessageX, marginMessageY);
+  ctx.fillText(text2, marginMessageX, marginMessageY + TEXT_HEIGHT);
 };
 
 var getMaxElement = function (arr) {
@@ -32,15 +38,7 @@ var getMaxElement = function (arr) {
   return maxElement;
 };
 
-window.renderStatistics = function (ctx, names, times) {
-  renderCloud(ctx, CLOUD_X + MARGIN, CLOUD_Y + MARGIN, 'rgba(0, 0, 0, 0.7)');
-  renderCloud(ctx, CLOUD_X, CLOUD_Y, '#fff');
-
-  ctx.fillStyle = '#000';
-  ctx.font = '16px PT Mono';
-  ctx.fillText('Ура вы победили!', marginMessageX, marginMessageY);
-  ctx.fillText('Список результатов:', marginMessageX, marginMessageY + TEXT_HEIGHT);
-
+var renderBar = function (ctx, names, times) {
   var maxTime = getMaxElement(times);
 
   for (var i = 0; i < names.length; i++) {
@@ -51,5 +49,11 @@ window.renderStatistics = function (ctx, names, times) {
     ctx.fillStyle = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' : 'hsl(240, ' + Math.round(Math.random() * 100) + '%, 50%)';
     ctx.fillRect(CLOUD_X + BAR_WIDTH + (BAR_WIDTH + SPACE) * i, marginBarY + BAR_HEIGHT - (BAR_HEIGHT * times[i] / maxTime), BAR_WIDTH, (BAR_HEIGHT * times[i] / maxTime));
   }
+};
 
+window.renderStatistics = function (ctx, names, times) {
+  renderCloud(ctx, CLOUD_X + MARGIN, CLOUD_Y + MARGIN, 'rgba(0, 0, 0, 0.7)');
+  renderCloud(ctx, CLOUD_X, CLOUD_Y, '#fff');
+  renderMessage(ctx, 'Ура вы победили!', 'Список результатов:', '16px PT Mono', '#000');
+  renderBar(ctx, names, times);
 };
