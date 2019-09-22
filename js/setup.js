@@ -22,12 +22,12 @@ var getEyes = function () {
 };
 
 var getCoat = function () {
-  var coatRandom = COAT_COLORS[getRandomInteger(0,  COAT_COLORS.length - 1)];
+  var coatRandom = COAT_COLORS[getRandomInteger(0, COAT_COLORS.length - 1)];
   return coatRandom;
 };
 
 var getName = function () {
-  var nameRandom = FIRST_NAMES[getRandomInteger(0,  FIRST_NAMES.length - 1)] + ' ' + FAMILY_NAMES[getRandomInteger(0,  FAMILY_NAMES.length - 1)];
+  var nameRandom = FIRST_NAMES[getRandomInteger(0, FIRST_NAMES.length - 1)] + ' ' + FAMILY_NAMES[getRandomInteger(0, FAMILY_NAMES.length - 1)];
   return nameRandom;
 };
 
@@ -36,7 +36,7 @@ var getWizard = function () {
     name: getName(),
     coatColor: getCoat(),
     eyesColor: getEyes()
-  }
+  };
 };
 
 var getWizards = function () {
