@@ -1,6 +1,6 @@
 'use strict';
 
-var COUNT = 4;
+var MAX_WIZARD_COUNT = 4;
 var FIRST_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
 var FAMILY_NAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
 var COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
@@ -42,7 +42,7 @@ var getWizard = function () {
 var getWizards = function () {
   var wizards = [];
 
-  for (var i = 0; i < COUNT; i++) {
+  for (var i = 0; i < MAX_WIZARD_COUNT; i++) {
     wizards.push(getWizard());
   }
 
@@ -67,7 +67,7 @@ var createWizard = function (wizard) {
 
 var renderWizards = function (container, wizards) {
   var fragment = document.createDocumentFragment();
-  for (var i = 0; i < COUNT; i++) {
+  for (var i = 0; i < MAX_WIZARD_COUNT; i++) {
     fragment.appendChild(createWizard(wizards[i]));
   }
   container.appendChild(fragment);
