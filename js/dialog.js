@@ -1,4 +1,6 @@
 'use strict';
+var DEFAUL_COORD_TOP = '80px';
+var DEFAUL_COORD_LEFT = '50%';
 
 (function () {
   var setupOpen = document.querySelector('.setup-open');
@@ -11,6 +13,8 @@
   var openPopup = function () {
     window.setup.classList.remove('hidden');
     document.addEventListener('keydown', onPopupEscPress);
+    window.setup.style.top = DEFAUL_COORD_TOP;
+    window.setup.style.left = DEFAUL_COORD_LEFT;
   };
 
   var closePopup = function () {
