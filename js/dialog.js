@@ -1,8 +1,9 @@
 'use strict';
-var DEFAUL_COORD_TOP = '80px';
-var DEFAUL_COORD_LEFT = '50%';
 
 (function () {
+  var DEFAUL_COORD_TOP = '80px';
+  var DEFAUL_COORD_LEFT = '50%';
+
   var setupOpen = document.querySelector('.setup-open');
   var setupClose = window.setup.querySelector('.setup-close');
 
