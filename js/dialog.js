@@ -93,7 +93,7 @@
     if (userNameInput.validity.tooShort) {
       userNameInput.setCustomValidity('Имя должно быть не менее 2-х символов');
     } else if (userNameInput.validity.tooLong) {
-      userNameInput.setCustomValidity('Имя не должно быть не более 25-ти символов');
+      userNameInput.setCustomValidity('Имя должно быть не более 25-ти символов');
     } else if (userNameInput.validity.valueMissing) {
       userNameInput.setCustomValidity('Обязательное поле');
     } else {

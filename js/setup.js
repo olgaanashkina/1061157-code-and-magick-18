@@ -2,51 +2,11 @@
 
 (function () {
   var MAX_WIZARD_COUNT = 4;
-  var FIRST_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-  var FAMILY_NAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
   var COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
   var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
   var FIREBALL_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 
   window.setup = document.querySelector('.setup');
-
-  var showElement = function (selector) {
-    var element = document.querySelector(selector);
-    element.classList.remove('hidden');
-  };
-
-  var getRandomInteger = function (min, max) {
-    var rand = min + Math.random() * (max + 1 - min);
-    return Math.floor(rand);
-  };
-
-  var getFeature = function (arr) {
-    var featureRandom = arr[getRandomInteger(0, arr.length - 1)];
-    return featureRandom;
-  };
-
-  var getName = function () {
-    var nameRandom = FIRST_NAMES[getRandomInteger(0, FIRST_NAMES.length - 1)] + ' ' + FAMILY_NAMES[getRandomInteger(0, FAMILY_NAMES.length - 1)];
-    return nameRandom;
-  };
-
-  var getWizard = function () {
-    return {
-      name: getName(),
-      coatColor: getFeature(EYES_COLORS),
-      eyesColor: getFeature(COAT_COLORS)
-    };
-  };
-
-  var getWizards = function () {
-    var wizards = [];
-
-    for (var i = 0; i < MAX_WIZARD_COUNT; i++) {
-      wizards.push(getWizard());
-    }
-
-    return wizards;
-  };
 
   var similarListElement = window.setup.querySelector('.setup-similar-list');
   var similarWizardTemplate = document.querySelector('#similar-wizard-template')
@@ -57,18 +17,38 @@
     var wizardElement = similarWizardTemplate.cloneNode(true);
 
     wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
-    wizardElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
-    wizardElement.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
+    wizardElement.querySelector('.wizard-coat').style.fill = wizard.colorCoat;
+    wizardElement.querySelector('.wizard-eyes').style.fill = wizard.colorEyes;
 
     return wizardElement;
   };
 
-  var renderWizards = function (container, wizards) {
+  var loadHandler = function (wizards) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < MAX_WIZARD_COUNT; i++) {
       fragment.appendChild(createWizard(wizards[i]));
     }
-    container.appendChild(fragment);
+    similarListElement.appendChild(fragment);
+    window.util.showElement('.setup-similar');
+  };
+
+  var errorHandler = function (errorMessage) {
+    var notice = document.createElement('div');
+    notice.style = 'z-index: 10; margin: 0 auto; margin-top: 30px; color: red; text-align: center; background-color: white;';
+    notice.style.position = 'absolute';
+    notice.style.left = 0;
+    notice.style.right = 0;
+    notice.style.fontSize = '40px';
+
+    notice.textContent = errorMessage;
+    document.body.insertAdjacentElement('afterbegin', notice);
+  };
+
+  window.backend.load(loadHandler, errorHandler);
+
+  var getFeature = function (arr) {
+    var featureRandom = arr[window.util.getRandomInteger(0, arr.length - 1)];
+    return featureRandom;
   };
 
   var userWizardCoat = window.setup.querySelector('.wizard-coat');
@@ -77,7 +57,6 @@
   var userInputWizardCoat = window.setup.querySelector('[name="coat-color"]');
   var userInputWizardEyes = window.setup.querySelector('[name="eyes-color"]');
   var userInputFireball = window.setup.querySelector('[name="fireball-color"]');
-
 
   var onUserWizardClick = function (property, inputProperty, arrColor) {
     var color = getFeature(arrColor);
@@ -103,8 +82,11 @@
     onUserFireballClick(userFireballColor, userInputFireball, FIREBALL_COLORS);
   });
 
-  var wizards = getWizards();
-  renderWizards(similarListElement, wizards);
-
-  showElement('.setup-similar');
+  var form = window.setup.querySelector('.setup-wizard-form');
+  form.addEventListener('submit', function (evt) {
+    window.backend.save(new FormData(form), function () {
+      window.util.hideElement('.setup-wizard-form');
+    });
+    evt.preventDefault();
+  });
 })();
