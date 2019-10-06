@@ -14,6 +14,18 @@ window.util = (function () {
       if (evt.keyCode === ENTER_KEYCODE) {
         action();
       }
-    }
+    },
+    getRandomInteger: function (min, max) {
+      var rand = min + Math.random() * (max + 1 - min);
+      return Math.floor(rand);
+    },
+    showElement: function (selector) {
+      var element = document.querySelector(selector);
+      element.classList.remove('hidden');
+    },
+    hideElement: function (selector) {
+      var element = document.querySelector(selector);
+      element.classList.add('hidden');
+    },
   };
 })();
