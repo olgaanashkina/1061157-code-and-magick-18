@@ -5,6 +5,8 @@
   var COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
   var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
   var FIREBALL_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
+  var URL_LOAD = 'https://js.dump.academy/code-and-magick/data';
+  var URL_SAVE = 'https://js.dump.academy/code-and-magick';
 
   window.setup = document.querySelector('.setup');
 
@@ -44,7 +46,7 @@
     document.body.insertAdjacentElement('afterbegin', notice);
   };
 
-  window.backend.load(loadHandler, errorHandler);
+  window.backend.load(URL_LOAD, loadHandler, errorHandler);
 
   var getFeature = function (arr) {
     var featureRandom = arr[window.util.getRandomInteger(0, arr.length - 1)];
@@ -84,7 +86,7 @@
 
   var form = window.setup.querySelector('.setup-wizard-form');
   form.addEventListener('submit', function (evt) {
-    window.backend.save(new FormData(form), function () {
+    window.backend.save(URL_SAVE, new FormData(form), function () {
       window.util.hideElement('.setup-wizard-form');
     });
     evt.preventDefault();
