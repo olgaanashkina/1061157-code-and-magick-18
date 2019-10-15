@@ -87,6 +87,8 @@
     document.addEventListener('mouseup', onMouseUp);
   });
 
+  window.avatar.selectAvatar();
+
   var userNameInput = window.setup.querySelector('.setup-user-name');
 
   userNameInput.addEventListener('invalid', function () {
